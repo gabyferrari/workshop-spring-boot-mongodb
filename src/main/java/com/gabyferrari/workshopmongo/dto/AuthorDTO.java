@@ -6,6 +6,8 @@ import com.gabyferrari.workshopmongo.domain.User;
 
 public class AuthorDTO implements Serializable{
 	
+	//para copiar somente o id e o name e nao os outros objetos do user
+	
 	private static final long serialVersionUID = 1L;
 	
 	private String id;
