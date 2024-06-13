@@ -1,5 +1,6 @@
 package com.gabyferrari.workshopmongo.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -18,4 +19,6 @@ public interface PostRepository extends MongoRepository<Post, String> {
 	//query method para procurar no banco de dados um titulo de post contendo por ex "partiu"
 	List<Post> findByTitleContainingIgnoreCase(String text); //ignoreCase serve para buscar sendo o titulo com letra maiuscula ou minuscula
 
+	@Query("{ $and: [ { date: { $gte: ?1 } }, { date: { $lte: ?2 } } , { $or: [ { 'title': { $regex: ?0, $options: 'i' } }, { 'body': { $regex: ?0, $options: 'i' } }, { 'comments.text': { $regex: ?0, $options: 'i' } } ] } ] }")
+	List<Post> fullSearch(String text, Date minDate, Date maxDate); //buscar o texto ou no titulo ou nos comentarios ou no corpo e entre hora tal e hora tal
 }
